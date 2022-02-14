@@ -8,7 +8,7 @@ Luckily enough, Florian Echtler did some research on the topic and shared his im
 I had myself already used my dated 27" 2009 iMac for several years in target display mode,
 simply because it has a nice display and it would be shame to throw away.
 
-However, the hard drive died recently, so I was trying to make it boot Linx from a USB thumb drive
+However, the hard drive died recently, so I was trying to make it boot Linux from a USB thumb drive
 to enable target display mode on the go.
 
 # The Problem
@@ -38,8 +38,8 @@ I based this off Docker, to stage the build environment for the Tiny Core Linux 
 Start as follows:
  
 ```
-git clone https://github.com/gpdm/
-cd <>
+git clone https://github.com/gpdm/tinycore-targetdisplaymode.git
+cd tinycore-targetdisplaymode 
 docker build . -t tcbuild
 ``` 
 
@@ -53,7 +53,7 @@ mkdir `pwd`/output
 docker run -it --rm -v `pwd`/output:/tmp/output  tcbuild
 ```
 
-This should run all necessary steps to
+This will run all necessary steps to
 
  * download the [smc_util](https://github.com/floe/smc_util/) source and compile it
  * download [Tiny Core Linux](http://tinycorelinux.net/) release 13 ISO
@@ -64,7 +64,7 @@ This should run all necessary steps to
 Pay close attention to the build process. It's verbose, but there's not much error checking,
 so it may fail at any time in the future (i.e. outdated download links, and such).
 
-If it success, you should have something like this in your `output` directory:
+If it succeeds, you should have something like this in your `output` directory:
 
 ```
 output/
@@ -168,13 +168,13 @@ If no other device is connected, your iMac may display nothing (blank screen) in
 This may also be the case if the graphics cable is not properly seated.
 But behold, you can also switch between display modes as follows:
 
-** Press CTRL+ALT+F4, wait 1-2 seconds, then simply press ENTER. This will turn off Target Display Mode, and your iMac should show the local Linux console.
-
-** Press CTRL+ALT+F3, wait 1-2 seconds, then simply press ENTER. This will turn on Target Display Mode, and your iMac should now act as a secondary display to your other Mac.
-
-** Press CTRL+ALT+F2, wait 1-2 seconds, then simply press ENTER. This will toggle between Target Display Mode and Local Display Mode. This is most similar in behaviour to Apples CMD+F2 key stroke.
-
-** Press CTRL+ALT+F1 to call-up the systems default console (will only be available if Target Display Mode was disabled).
+ * Press CTRL+ALT+F4, wait 1-2 seconds, then simply press ENTER. This will turn off Target Display Mode, and your iMac should show the local Linux console.
+ 
+ * Press CTRL+ALT+F3, wait 1-2 seconds, then simply press ENTER. This will turn on Target Display Mode, and your iMac should now act as a secondary display to your other Mac.
+ 
+ * Press CTRL+ALT+F2, wait 1-2 seconds, then simply press ENTER. This will toggle between Target Display Mode and Local Display Mode. This is most similar in behaviour to Apples CMD+F2 key stroke.
+ 
+ * Press CTRL+ALT+F1 to call-up the systems default console (will only be available if Target Display Mode was disabled).
 
 
 
@@ -199,13 +199,4 @@ for EFI64 systems. This is at least compatible to iMac 2009 and later models.
 There may be cases, where this does not work and a 32bit EFI loader is needed.
 This can also be found on the same location, however I can make no guarantee that it actually works,
 as I had never tested this.
-
-
-
-  
-
-
-
-
-
 
