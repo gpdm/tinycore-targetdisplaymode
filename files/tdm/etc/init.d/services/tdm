@@ -1,0 +1,15 @@
+#!/bin/sh
+
+case "${1}" in
+	start)
+		/usr/bin/tdm_on
+		;;
+
+	stop)
+		/usr/bin/tdm_off
+		;;
+
+	*)
+		exit 1
+		;;
+esac
