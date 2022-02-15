@@ -1,4 +1,4 @@
-# Tiny Core Linux Extension for Vintage Mac Target Display Mode {#intro}
+# Tiny Core Linux Extension for Vintage Mac Target Display Mode
 
 Well, if you ended up here, you're propably running Linux on a Vintage Mac and trying to enable Target Display Mode.
 
@@ -11,12 +11,12 @@ simply because it has a nice display and it would be shame to throw away.
 However, the hard drive died recently, so I was trying to make it boot Linux from a USB thumb drive
 to enable target display mode on the go.
 
-# The Problem {#the-problem}
+# The Problem
 
 Well, one thing that really bothered me was the need to install a full-blown operating system to simply run as a dumb display.
 But even the smallest Debian or Ubuntu weigh-in at several hundred MiB, which is too much bloat. I wanted something small.
 
-# The Solution {#the-solution}
+# The Solution
 
 This is where [Tiny Core Linux](http://tinycorelinux.net/) comes into play!
 
@@ -24,14 +24,14 @@ It's well maintained, and in it's smallest incarnation less than 30 MiB, just ab
 So the idea was born ...
 
 
-# Technical Approach {#technical-approach}
+# Technical Approach
 
 This repository packages a bunch of scripts and other modifications, a `Dockerfile` and EFI boot loader, to assist you
 not only building a package file for Tiny Core Linux, but to also assemble everything together for a bootable USB thumb drive,
 that you can boot off your vintage Mac.
 
 
-## Staging a Docker container as a Build Environment {#staging-the-container}
+## Staging a Docker container as a Build Environment
 
 I based this off Docker, to stage the build environment for the Tiny Core Linux extension inside a container environment.
 
@@ -44,7 +44,7 @@ docker build . -t tcbuild
 ``` 
 
 
-## Run the build inside the container {#running-the-build}
+## Run the build inside the container
 
 Now that your container was built, create an `output` directory, then simply run the container.
 
@@ -79,7 +79,7 @@ output/boot-isos/Core-remastered.iso
 ```
 
 
-## Creating a Bootable USB thumb drive {#creating-bootable-thumb-drive}
+## Creating a Bootable USB thumb drive
 
 Now take any USB thumb drive, and proceed as follows:
 
@@ -90,7 +90,7 @@ Now take any USB thumb drive, and proceed as follows:
 (i) The thumb drive should be no less than 64 MiB, but also not bigger. Everything above 64 MiB works of course, but is simply a waste.
 
 
-### Initalizing the USB drive in MacOS Terminal {#diskutil-partitioning}
+### Initalizing the USB drive in MacOS Terminal
 
 Check out the device list using `diskutil list` command, whereas you'll get something like this:
 
@@ -131,14 +131,14 @@ Upon reinspection, you will see something like this with the `diskutil list /dev
    2:       Microsoft Basic Data TINYCORE                3.8 GB     disk3s2
 ```
 
-### Example of files contained on the USB drive {#sample-structure-on-usb}
+### Example of files contained on the USB drive
 
 
 <<<<>>>>
 
 
 
-## How to Use {#how-to-use}
+## How to Use
 
 Well, once you have prepared your USB thumbdrive and copied all files over,
 insert it into your iMac. Make sure that your second system is already wired-up with the graphics cable.
@@ -162,7 +162,7 @@ Then power your iMac on.
    If no system is connected, you may loose your display, as it may still turn black. DON'T PANIC and read along below!
 
 
-### Switching Between Display Modes {#switching-display-modes}
+### Switching Between Display Modes
 
 If no other device is connected, your iMac may display nothing (blank screen) in some cases.
 This may also be the case if the graphics cable is not properly seated.
@@ -177,9 +177,9 @@ But behold, you can also switch between display modes as follows:
  * Press CTRL+ALT+F4, wait 1-2 seconds, then simply press ENTER. This will turn off Target Display Mode, and your iMac should show the local Linux console.
 
 
-## Customizations {#customizations}
+## Customizations
 
-### Device Identifiers / Grub Config {#custom-device}
+### Device Identifiers / Grub Config
 
 The configuration as seen fits well for my own purpose.
 There might be cases, where it actually has to be adapted to your specific environments.
@@ -190,7 +190,7 @@ boot instructions for Tiny Core Linux.
 Please read the extra [instructions](files/grub/README.md) for details concerning
 device identifiers, which may need to be changed depending on your system.
 
-### Boot Loader {#boot-loader}
+### Boot Loader
 
 This repository includes a general purposexs GRUB boot loader from [Super Grub2 Disk](https://www.supergrubdisk.org/super-grub2-disk/)
 for EFI64 systems. This is at least compatible to iMac 2009 and later models.
