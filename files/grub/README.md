@@ -5,7 +5,7 @@ loopback device, so it can be booted off the USB stick.
 
 The `iso=sdc2` instructs TinyCore where to look for the ISO files,
 from where extensions are auto-installed during startup.
-The partition number is a given when following the exact [instructions](../../README.md#initalizing-the-usb-drive-in-macos-terminal-diskutil-partitioning)
+The partition number is a given when following the exact [instructions](../../README.md#initalizing-the-usb-drive-in-macos-terminal)
 as outlined. If you use other means of partitioning, then device identifiers might be different,
 and you need to adapt [grub.cfg](grub.cfg) accordingly.
 
