@@ -1,4 +1,4 @@
-# Tiny Core Linux Extension for Vintage Mac Target Display Mode
+# Tiny Core Linux Extension for Vintage Mac Target Display Mode {#intro}
 
 Well, if you ended up here, you're propably running Linux on a Vintage Mac and trying to enable Target Display Mode.
 
@@ -11,12 +11,12 @@ simply because it has a nice display and it would be shame to throw away.
 However, the hard drive died recently, so I was trying to make it boot Linux from a USB thumb drive
 to enable target display mode on the go.
 
-# The Problem
+# The Problem {#the-problem}
 
 Well, one thing that really bothered me was the need to install a full-blown operating system to simply run as a dumb display.
 But even the smallest Debian or Ubuntu weigh-in at several hundred MiB, which is too much bloat. I wanted something small.
 
-# The Solution
+# The Solution {#the-solution}
 
 This is where [Tiny Core Linux](http://tinycorelinux.net/) comes into play!
 
@@ -24,14 +24,14 @@ It's well maintained, and in it's smallest incarnation less than 30 MiB, just ab
 So the idea was born ...
 
 
-# Technical Approach
+# Technical Approach {#technical-approach}
 
 This repository packages a bunch of scripts and other modifications, a `Dockerfile` and EFI boot loader, to assist you
 not only building a package file for Tiny Core Linux, but to also assemble everything together for a bootable USB thumb drive,
 that you can boot off your vintage Mac.
 
 
-## Staging a Docker container as a Build Environment
+## Staging a Docker container as a Build Environment {#staging-the-container}
 
 I based this off Docker, to stage the build environment for the Tiny Core Linux extension inside a container environment.
 
@@ -44,13 +44,12 @@ docker build . -t tcbuild
 ``` 
 
 
-## Run the build inside the container
+## Run the build inside the container {#running-the-build}
 
 Now that your container was built, create an `output` directory, then simply run the container.
 
 ```
-mkdir `pwd`/output
-docker run -it --rm -v `pwd`/output:/tmp/output  tcbuild
+docker run -it --rm -v `pwd`/output:/tmp/output tcbuild
 ```
 
 This will run all necessary steps to
@@ -80,7 +79,7 @@ output/boot-isos/Core-remastered.iso
 ```
 
 
-## Creating a Bootable USB thumb drive
+## Creating a Bootable USB thumb drive {#creating-bootable-thumb-drive}
 
 Now take any USB thumb drive, and proceed as follows:
 
@@ -91,7 +90,7 @@ Now take any USB thumb drive, and proceed as follows:
 (i) The thumb drive should be no less than 64 MiB, but also not bigger. Everything above 64 MiB works of course, but is simply a waste.
 
 
-### Initalizing the USB drive on MacOS Terminal
+### Initalizing the USB drive in MacOS Terminal {#diskutil-partitioning}
 
 Check out the device list using `diskutil list` command, whereas you'll get something like this:
 
@@ -117,11 +116,12 @@ diskutil partitionDisk /dev/disk3 1 GPT MS-DOS TINYCORE 0
 The above would initialize the drive as follows:
 
  * GPT partition table
- * creates one (1) single MS-DOS/FAT32 partition
+ * creates one hidden EFI partition
+ * creates one MS-DOS/FAT32 partition
  * sets a label "TINYCORE"
  * and fills all available disk space to the max
 
-Upon reinspection, you will see something like this:
+Upon reinspection, you will see something like this with the `diskutil list /dev/disk3` command:
 
 ```
 /dev/disk3 (external, physical):
@@ -131,14 +131,14 @@ Upon reinspection, you will see something like this:
    2:       Microsoft Basic Data TINYCORE                3.8 GB     disk3s2
 ```
 
-### Example of files contained on the USB drive
+### Example of files contained on the USB drive {#sample-structure-on-usb}
 
 
 <<<<>>>>
 
 
 
-## How to Use
+## How to Use {#how-to-use}
 
 Well, once you have prepared your USB thumbdrive and copied all files over,
 insert it into your iMac. Make sure that your second system is already wired-up with the graphics cable.
@@ -147,11 +147,11 @@ Then power your iMac on.
  * Press OPTION (ALT) key during power on. You should get several icons, one showing up as "EFI Boot".
    Select this one to boot.
 
- * You'll now enter GRUB boot menu.
+ * You'll be presented with the GRUB boot menu.
 
- * Choose "Detect all boot options" and hit ENTER
+ * Choose "Detect and show boot methods" option and hit ENTER.
 
- * After a few moments, you should get new options on display. Navigate to "Tiny Core Linux" and press ENTER.
+ * After a few moments, you should get new options on display. Navigate to "Tiny Core Linux" option and press ENTER.
 
  * It should take a few seconds to boot up. Be patient and don't panic when it stalls for 10 seconds.
    That's because the system waits for the USB to settle.
@@ -159,28 +159,27 @@ Then power your iMac on.
  * Eventually, the extensions should be loaded.
  
  * If your second system is wired up (it should!), the iMac will automatically switch into Target Display Mode.
-   If no system is connected, you will loose your display, as it turns black. DON'T PANIC!
+   If no system is connected, you may loose your display, as it may still turn black. DON'T PANIC and read along below!
 
 
-### Switching Between Display Modes
+### Switching Between Display Modes {#switching-display-modes}
 
 If no other device is connected, your iMac may display nothing (blank screen) in some cases.
 This may also be the case if the graphics cable is not properly seated.
 But behold, you can also switch between display modes as follows:
 
- * Press CTRL+ALT+F4, wait 1-2 seconds, then simply press ENTER. This will turn off Target Display Mode, and your iMac should show the local Linux console.
- 
- * Press CTRL+ALT+F3, wait 1-2 seconds, then simply press ENTER. This will turn on Target Display Mode, and your iMac should now act as a secondary display to your other Mac.
- 
- * Press CTRL+ALT+F2, wait 1-2 seconds, then simply press ENTER. This will toggle between Target Display Mode and Local Display Mode. This is most similar in behaviour to Apples CMD+F2 key stroke.
- 
  * Press CTRL+ALT+F1 to call-up the systems default console (will only be available if Target Display Mode was disabled).
 
+ * Press CTRL+ALT+F2, wait 1-2 seconds, then simply press ENTER. This will toggle between Target Display Mode and Local Display Mode. This is most similar in behaviour to Apples CMD+F2 key stroke.
+
+ * Press CTRL+ALT+F3, wait 1-2 seconds, then simply press ENTER. This will turn on Target Display Mode, and your iMac should now act as a secondary display to your other Mac.
+
+ * Press CTRL+ALT+F4, wait 1-2 seconds, then simply press ENTER. This will turn off Target Display Mode, and your iMac should show the local Linux console.
 
 
-## Customizations
+## Customizations {#customizations}
 
-### Device Identifiers / Grub Config
+### Device Identifiers / Grub Config {#custom-device}
 
 The configuration as seen fits well for my own purpose.
 There might be cases, where it actually has to be adapted to your specific environments.
@@ -188,10 +187,10 @@ There might be cases, where it actually has to be adapted to your specific envir
 One of the more obvious ones is [grub.cfg](files/grub/grub.cfg), which contains the
 boot instructions for Tiny Core Linux.
 
-Please read the extra [instructions](files/grub/README.MD) for details concerning
+Please read the extra [instructions](files/grub/README.md) for details concerning
 device identifiers, which may need to be changed depending on your system.
 
-### Boot Loader
+### Boot Loader {#boot-loader}
 
 This repository includes a general purposexs GRUB boot loader from [Super Grub2 Disk](https://www.supergrubdisk.org/super-grub2-disk/)
 for EFI64 systems. This is at least compatible to iMac 2009 and later models.
