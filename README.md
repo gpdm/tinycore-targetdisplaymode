@@ -133,10 +133,7 @@ Upon reinspection, you will see something like this with the `diskutil list /dev
 
 ### Example of files contained on the USB drive
 
-
-<<<<>>>>
-
-
+![USB contents](./docs/USB_contents.png)
 
 ## How to Use
 
