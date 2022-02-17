@@ -166,20 +166,20 @@ Then power your iMac on.
 
 If no other device is connected, your iMac may display nothing (blank screen) in some cases.
 This may also be the case if the graphics cable is not properly seated.
-But behold, you can also switch between display modes as follows:
 
- * Press CTRL+ALT+F1 to call-up the systems default console (will only be available if Target Display Mode was disabled).
+But behold, you can use shortcuts to switch between display modes as indicated:
 
- * Press CTRL+ALT+F2, wait 1-2 seconds, then simply press ENTER. This will toggle between Target Display Mode and Local Display Mode. This is most similar in behaviour to Apples CMD+F2 key stroke.
-
- * Press CTRL+ALT+F3, wait 1-2 seconds, then simply press ENTER. This will turn on Target Display Mode, and your iMac should now act as a secondary display to your other Mac.
-
- * Press CTRL+ALT+F4, wait 1-2 seconds, then simply press ENTER. This will turn off Target Display Mode, and your iMac should show the local Linux console.
+| Keystroke | Description |
+| --- | --- |
+| CTRL+ALT+F1, press <ENTER> | Bring up the system default console (will only be available if Target Display Mode was disabled) |
+| CTRL+ALT+F2, press <ENTER> | Toggle between Target Display Mode and Local Display Mode. This is most similar in behaviour to Apples CMD+F2 key stroke. |
+| CTRL+ALT+F3, press <ENTER> | This will turn on Target Display Mode, and your iMac should now act as a secondary display to your other Mac. |
+| CTRL+ALT+F4, press <ENTER> | This will turn off Target Display Mode, and your iMac should show the local Linux console. |
 
 
 ## Customizations
 
-### Device Identifiers / Grub Config
+### Device Identifiers in Grub Config
 
 The configuration as seen fits well for my own purpose.
 There might be cases, where it actually has to be adapted to your specific environments.
@@ -188,14 +188,21 @@ One of the more obvious ones is [grub.cfg](files/grub/grub.cfg), which contains 
 boot instructions for Tiny Core Linux.
 
 Please read the extra [instructions](files/grub/README.md) for details concerning
-device identifiers, which may need to be changed depending on your system.
+device identifiers, which may need to be changed depending on your system an in accordance
+to the actual partitioning of your USB key.
 
 ### Boot Loader
 
-This repository includes a general purposexs GRUB boot loader from [Super Grub2 Disk](https://www.supergrubdisk.org/super-grub2-disk/)
+This repository includes a general purpose GRUB boot loader from [Super Grub2 Disk](https://www.supergrubdisk.org/super-grub2-disk/)
 for EFI64 systems. This is at least compatible to iMac 2009 and later models.
 
 There may be cases, where this does not work and a 32bit EFI loader is needed.
 This can also be found on the same location, however I can make no guarantee that it actually works,
 as I had never tested this.
 
+
+## Attributions
+
+ * Florian Echtler for [smc_util](https://github.com/floe/smc_util/)
+ * The developers of [Super Grub2 Disk](https://www.supergrubdisk.org/super-grub2-disk/)
+ * The developers of [Tiny Core Linux](http://tinycorelinux.net/) 
