@@ -133,6 +133,9 @@ Upon reinspection, you will see something like this with the `diskutil list /dev
 
 ### Example of files contained on the USB drive
 
+Then copy everything within the `output` directory directly into to the USB root directory.
+It should look like this:
+
 ![USB contents](./docs/USB_contents.png)
 
 ## How to Use
