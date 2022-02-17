@@ -17,11 +17,14 @@ function my_trap_handler()
         echo "${MYSELF}: line ${LASTLINE}: exit status of last command: ${LASTERR}"
 
 	# abort on failure
-	exit
+	exit 1
 }
 
 # divert errors to trap handler
 trap 'my_trap_handler ${LINENO} ${$?}' ERR
+
+# check if ISO source looks halfway legit, or bail out
+echo ${TC_ISO_URL} | grep -Ee '^https?://www.tinycorelinux.net/[0-9]+.*/.*\.iso' >/dev/null || { echo "Error: invalid ISO download source"; false; }
 
 
 # build SMC utility from https://github.com/floe/smc_util
@@ -35,7 +38,7 @@ cc -O2 -o SmcDumpKey SmcDumpKey.c -Wall
 # fetch TinyCore ISO and extract it
 printf "## STAGE 2: fetch TinyCore ISO\n"
 mkdir -p ${tinycore_dir}
-wget http://tinycorelinux.net/13.x/x86/release/TinyCore-current.iso -O ${tinycore_dir}/Core-current.iso
+wget "${TC_ISO_URL}" -O ${tinycore_dir}/Core-current.iso
 xorriso -osirrox on -indev ${tinycore_dir}/Core-current.iso -extract / ${tinycore_dir}/Core-current
 
 

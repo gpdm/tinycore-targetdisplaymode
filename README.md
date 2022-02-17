@@ -30,6 +30,15 @@ This repository packages a bunch of scripts and other modifications, a `Dockerfi
 not only building a package file for Tiny Core Linux, but to also assemble everything together for a bootable USB thumb drive,
 that you can boot off your vintage Mac.
 
+The bootable image is extended in the following ways:
+
+ * a new package called `tdm` ("target display mode"), containg a custom compiled version of `smc_util`, is included
+ * helper scripts are included in this package:
+  * `/etc/init.d/services/tdm` as an init-style script, which accepts `start|stop|restart` keywords
+  * `/usr/bin/tdm_on`, `/usr/bin/tdm_off` and `/usr/bin/tdm_toggle`, which can be used for turning Target Display Mode on/off or toggling it between states.
+ * an automated startup trigger is installed at `/usr/local/tce.installed/tdm`, to switch Target Display Mode automatically on
+ * `/etc/inittab` is modified to run `tdm_toggle`, `tdm_on` and `tdm_off` scripts via the virtual terminalcs 2-4 (see also hot keys, further below) 
+
 
 ## Staging a Docker container as a Build Environment
 
@@ -78,6 +87,22 @@ output/boot-isos
 output/boot-isos/Core-remastered.iso
 ```
 
+## Run the build with a different TinyCore ISO file
+
+By default, `http://tinycorelinux.net/13.x/x86/release/TinyCore-current.iso` is downloaded as the most
+compact version of TinyCore Linux, which weights only some ~20 MiB.
+
+You may of course use a different release, or a different image.
+For this purpose, the container supports `TC_ISO_URL` environment variable,
+which will be processed by the `build.sh` script.
+
+If you want to use the more generous Tiny Core Plus image, you could specify it like this:
+
+```
+docker run -it --rm -v `pwd`/output:/tmp/output \
+	-e TC_ISO_URL=http://www.tinycorelinux.net/13.x/x86/release/CorePlus-current.iso \
+	tcbuild
+```
 
 ## Creating a Bootable USB thumb drive
 
