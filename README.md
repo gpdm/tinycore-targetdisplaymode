@@ -34,8 +34,8 @@ The bootable image is extended in the following ways:
 
  * a new package called `tdm` ("target display mode"), containg a custom compiled version of `smc_util`, is included
  * helper scripts are included in this package:
-  * `/etc/init.d/services/tdm` as an init-style script, which accepts `start|stop|restart` keywords
-  * `/usr/bin/tdm_on`, `/usr/bin/tdm_off` and `/usr/bin/tdm_toggle`, which can be used for turning Target Display Mode on/off or toggling it between states.
+   * `/etc/init.d/services/tdm` as an init-style script, which accepts `start|stop|restart` keywords
+   * `/usr/bin/tdm_on`, `/usr/bin/tdm_off` and `/usr/bin/tdm_toggle`, which can be used for turning Target Display Mode on/off or toggling it between states.
  * an automated startup trigger is installed at `/usr/local/tce.installed/tdm`, to switch Target Display Mode automatically on
  * `/etc/inittab` is modified to run `tdm_toggle`, `tdm_on` and `tdm_off` scripts via the virtual terminalcs 2-4 (see also hot keys, further below) 
 
