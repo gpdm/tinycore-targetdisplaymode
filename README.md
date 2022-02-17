@@ -189,10 +189,7 @@ Then power your iMac on.
 
 ### Switching Between Display Modes
 
-If no other device is connected, your iMac may display nothing (blank screen) in some cases.
-This may also be the case if the graphics cable is not properly seated.
-
-But behold, you can use shortcuts to switch between display modes as indicated:
+Behold, you can use shortcuts to switch between display modes!
 
 | Keystroke | Description |
 | --- | --- |
@@ -203,8 +200,10 @@ But behold, you can use shortcuts to switch between display modes as indicated:
 
 
 ## Customizations
+	
+This section covers potential areas, thay may require modifications in some situations.
 
-### Device Identifiers in Grub Config
+### Device Identifiers in grub.cfg
 
 The configuration as seen fits well for my own purpose.
 There might be cases, where it actually has to be adapted to your specific environments.
@@ -224,6 +223,31 @@ for EFI64 systems. This is at least compatible to iMac 2009 and later models.
 There may be cases, where this does not work and a 32bit EFI loader is needed.
 This can also be found on the same location, however I can make no guarantee that it actually works,
 as I had never tested this.
+
+	
+## FAQ
+	
+### I have screen flickering or a blank screen
+	
+Check the display cable connection between your two machines.
+Check the cable is properly and firmly inserted.
+
+### I see nothing but a blank screen
+
+See previous answer.
+Maybe try turning Target Display Mode off and on again, using either the keyboard shortcuts as described above, or via the various helper scripts `tdm_off`, `tdm_on` or `tdm_toggle`.
+
+### Does this work on all Macs?
+
+In theory, yes, it should.
+At least on all modell series between ~2009 and ~mid 2014, which supported TDM.
+
+Check out the [Apple Knowledge Base](https://support.apple.com/en-us/HT204592) on this topic.
+	
+### Why should I use this approach? MacOS does it already!
+
+Sure. Is I mentioned, I went into this topic simply my hard drive died, and I though about just booting off USB instead.
+I simply didn't want to install a fullblown OS, for getting this rather simple job done.
 
 
 ## Attributions
