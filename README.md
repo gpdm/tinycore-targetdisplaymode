@@ -191,8 +191,8 @@ Then power your iMac on.
 
  * After a few moments, you should get new options on display.
    * Mind what was mentioned before about sizes of your USB key, and how the `EFI` partition is present for USB keys above 2 GiB in size?
-   * For USB keys <= 2 GiB, choose the `Tiny Core Linux (USB <= 2.0 GiB)` boot option
-   * For USB keys > 2 GiB, choose the `Tiny Core Linux (USB > 2.0 GiB)` boot option
+   * For USB keys <= 2 GiB, choose the `Tiny Core Linux (USB <= 2.0 GiB, without EFI partition)` boot option
+   * For USB keys > 2 GiB, choose the `Tiny Core Linux (USB > 2.0 GiB, with EFI partition)` boot option
 
  * It should take a few seconds to boot up. Be patient and don't panic when it stalls for 10 seconds.
    That's because the system waits for the USB to settle.
