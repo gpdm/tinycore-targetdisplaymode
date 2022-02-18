@@ -156,6 +156,19 @@ Upon reinspection, you will see something like this with the `diskutil list /dev
    2:       Microsoft Basic Data TINYCORE                3.8 GB     disk3s2
 ```
 
+Please note, that the availability of the `EFI` partition depends on the size of your USB key.
+For anything less than 2 GiB in size, no EFI partition will be created, hence your partitioning scheme will something like this:
+
+```
+/dev/disk3 (external, physical):
+   #:                       TYPE NAME                    SIZE       IDENTIFIER
+   0:      GUID_partition_scheme                        *2.1 GB     disk3
+   1:       Microsoft Basic Data TINYCORE                2.1 GB     disk3s1
+```
+
+That's totally fine, though it has a to be paid attention to for the boot procedure as outlined later on.
+
+
 ### Example of files contained on the USB drive
 
 Then copy everything within the `output` directory directly into to the USB root directory.
@@ -176,7 +189,10 @@ Then power your iMac on.
 
  * Choose "Detect and show boot methods" option and hit ENTER.
 
- * After a few moments, you should get new options on display. Navigate to "Tiny Core Linux" option and press ENTER.
+ * After a few moments, you should get new options on display.
+   * Mind what was mentioned before about sizes of your USB key, and how the `EFI` partition is present for USB keys above 2 GiB in size?
+   * For USB keys <= 2 GiB, choose the `Tiny Core Linux (USB <= 2.0 GiB)` boot option
+   * For USB keys > 2 GiB, choose the `Tiny Core Linux (USB > 2.0 GiB)` boot option
 
  * It should take a few seconds to boot up. Be patient and don't panic when it stalls for 10 seconds.
    That's because the system waits for the USB to settle.
@@ -248,6 +264,24 @@ Check out the [Apple Knowledge Base](https://support.apple.com/en-us/HT204592) o
 
 Sure. As I mentioned, I went into this topic simply because my hard drive died, and I thought about just booting off USB instead.
 I just didn't want to install a fullblown OS for getting this rather simple job done.
+
+### I got boot error complaining something about "device not found"
+	
+Yeah, this may be depending on the size of your USB key. Explanations to this are further above and is influenced by the presence
+of the auto-created `EFI` partition on the USB key.
+	
+Please check again the boot procedure, and choose the appropriate boot options that matches your USB key.
+
+If that doesn't help, check the notes further above about the device IDs, and their potential need to adaptations in the `grub.cfg` file.
+	
+### TDM does not automatically turn on on boot
+
+Well, it should, unless cables aren't properly seated anyway.
+However, when you are on the Linux console, run the `/usr/bin/tdm_toggle` toggle command manually and see what happens.
+
+If you get an error like "file not found", the packages were not properly installed.
+This is indicative to the partition scheme, wrong or mismatching device identifiers, or the wrong boot option being chosen.
+Please check the previous FAQ question & answer to further details.
 
 
 ## Attributions
