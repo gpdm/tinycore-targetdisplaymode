@@ -246,8 +246,8 @@ Check out the [Apple Knowledge Base](https://support.apple.com/en-us/HT204592) o
 	
 ### Why should I use this approach? MacOS does it already!
 
-Sure. Is I mentioned, I went into this topic simply my hard drive died, and I though about just booting off USB instead.
-I simply didn't want to install a fullblown OS, for getting this rather simple job done.
+Sure. As I mentioned, I went into this topic simply because my hard drive died, and I thought about just booting off USB instead.
+I just didn't want to install a fullblown OS for getting this rather simple job done.
 
 
 ## Attributions
