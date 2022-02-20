@@ -49,7 +49,7 @@ Start as follows:
 ```
 git clone https://github.com/gpdm/tinycore-targetdisplaymode.git
 cd tinycore-targetdisplaymode 
-docker build . -t tcbuild
+sudo docker build . -t tcbuild
 ``` 
 
 
