@@ -58,7 +58,7 @@ docker build . -t tcbuild
 Now that your container was built, create an `output` directory, then simply run the container.
 
 ```
-docker run -it --rm -v `pwd`/output:/tmp/output tcbuild
+sudo docker run -it --rm -v `pwd`/output:/tmp/output tcbuild
 ```
 
 This will run all necessary steps to
@@ -99,7 +99,7 @@ which will be processed by the `build.sh` script.
 If you want to use the more generous Tiny Core Plus image, you could specify it like this:
 
 ```
-docker run -it --rm -v `pwd`/output:/tmp/output \
+sudo docker run -it --rm -v `pwd`/output:/tmp/output \
 	-e TC_ISO_URL=http://www.tinycorelinux.net/13.x/x86/release/CorePlus-current.iso \
 	tcbuild
 ```
