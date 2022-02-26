@@ -21,8 +21,9 @@ But even the smallest Debian or Ubuntu weigh-in at several hundred MiB, which is
 This is where [Tiny Core Linux](http://tinycorelinux.net/) comes into play!
 
 It's well maintained, and in it's smallest incarnation less than 30 MiB, just about enough to boot up and run a few scripts.
-So the idea was born ...
+So the idea was born.
 
+To see an actual walk-through and system demo, checkout my [iMac Target Display Mode using Linux](https://www.youtube.com/watch?v=hnRjJ6PVjic) video on YT.
 
 # Technical Approach
 
