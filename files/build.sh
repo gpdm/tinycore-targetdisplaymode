@@ -24,7 +24,7 @@ function my_trap_handler()
 trap 'my_trap_handler ${LINENO} ${$?}' ERR
 
 # check if ISO source looks halfway legit, or bail out
-echo ${TC_ISO_URL} | grep -Ee '^https?://www.tinycorelinux.net/[0-9]+.*/.*\.iso' >/dev/null || { echo "Error: invalid ISO download source"; false; }
+echo ${TC_ISO_URL} | grep -Ee '^https?://(www\.)?tinycorelinux\.net/[0-9]+.*/.*\.iso' >/dev/null || { echo "Error: invalid ISO download source"; false; }
 
 
 # build SMC utility from https://github.com/floe/smc_util
