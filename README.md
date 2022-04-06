@@ -266,12 +266,15 @@ Check out the [Apple Knowledge Base](https://support.apple.com/en-us/HT204592) o
 Sure. As I mentioned, I went into this topic simply because my hard drive died, and I thought about just booting off USB instead.
 I just didn't want to install a fullblown OS for getting this rather simple job done.
 
-### I got boot error complaining something about "device not found"
+### I got boot error complaining something about "device / partition not found"
 	
 Yeah, this may be depending on the size of your USB key. Explanations to this are further above and is influenced by the presence
 of the auto-created `EFI` partition on the USB key.
 	
-Please check again the boot procedure, and choose the appropriate boot options that matches your USB key.
+Please check again the boot procedure, and choose the appropriate *boot options* on the startup menu that matches your USB key size, either
+	
+ * Tiny Core Linux (USB <= 2.0 GiB, without EFI partition)
+ * Tiny Core Linux (USB > 2.0 GiB, with EFI partition)	
 
 If that doesn't help, check the notes further above about the device IDs, and their potential need to adaptations in the `grub.cfg` file.
 	
