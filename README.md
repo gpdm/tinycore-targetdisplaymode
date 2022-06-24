@@ -169,6 +169,10 @@ For anything less than 2 GiB in size, no EFI partition will be created, hence yo
 
 That's totally fine, though it has a to be paid attention to for the boot procedure as outlined later on.
 
+## Initalizing the USB drive in Windows Terminal
+
+PRs welcome.
+
 
 ### Example of files contained on the USB drive
 
