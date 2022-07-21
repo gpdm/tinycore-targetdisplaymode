@@ -9,8 +9,9 @@ The partition number is a given when following the exact [instructions](../../RE
 as outlined. If you use other means of partitioning, then device identifiers might be different,
 and you need to adapt [grub.cfg](grub.cfg) accordingly.
 
- * Please note, for my particular iMac, `sda` was the first harddrive, `sdb` the DVD drive,
-   and `sdc` would become the USB stick. You may need to tweak this.
+ * Please note, for my particular iMac, `sda` was the first harddrive, `sdb` the card reader,
+   and `sdc` would become the USB stick. You may need to adjust the `iso=` device identifier depending on your particular system configuration.
+   See also section below for help on this topic.
    
  * Be also aware, the two options presented here are to cope with USB keys <= 2.0 GiB,
    and > 2.0 GiB, for with MacOS' `diskutil` command will always create an EFI partition for anything
@@ -38,3 +39,25 @@ menuentry "Tiny Core Linux (USB > 2.0 GiB, with EFI partition)" {
 }
 ```
 
+### Identifying the USB drive
+
+If you don't know, which Linux device identifier is assigned to your USB thumb drive,
+you may want to boot Tiny Core and run `dmesg | grep removable` from the shell.
+
+Here's an annotated example of what output I get:
+
+```
+sd 6:0:0:0 [sdb] Attached SCSI removable disk                        # built-in card reader
+sd 7:0:0:0 [sdc] Attached SCSI removable disk                        # plugged-in USB thumb drive
+```
+
+Alternatively, do `dmesg | grep Direct-Access`.
+
+```
+scsi 0:0:0:0 Direct-Access     ATA         Hitachi HDS72202 B23N PQ: 0 ANSI: 5
+scsi 6:0:0:0 Direct-Access     APPLE       SD Card Reader   1.0  PQ: 0 ANSI: 0
+scsi 7:0:0:0 Direct-Access     General     USB Flash Disk   1.0  PQ: 0 ANSI: 2
+```
+
+So by matching up device `7:0:0:0` from these examples, I was certain that `sdc` was the correct
+device-ID for my USB thumb drive, hence the `iso=` config statement in `grub.cfg` would read `iso=sdc`.
