@@ -301,7 +301,16 @@ If you want to do that, run it like this:
 	
 `sudo tdm_off`
 
-
+	
+### I get a "failed in waitforX" error!
+	
+This is not actually an error.
+	
+This minimalistic build of TinyCore does not have X installed, and thus will fail to start X11.
+But that's not a problem, as we don't need it at all.
+	
+The message is purely cosmetic and can be safely ignored.
+	
 
 ## Attributions
 
