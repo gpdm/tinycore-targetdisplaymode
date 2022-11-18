@@ -296,7 +296,9 @@ The main console is logged in with the tc default account, which can't change th
 If you want to do that, run it like this:
 
 `sudo tdm_toggle`
+	
 `sudo tdm_on`
+	
 `sudo tdm_off`
 
 
@@ -306,3 +308,11 @@ If you want to do that, run it like this:
  * Florian Echtler for [smc_util](https://github.com/floe/smc_util/)
  * The developers of [Super Grub2 Disk](https://www.supergrubdisk.org/super-grub2-disk/)
  * The developers of [Tiny Core Linux](http://tinycorelinux.net/) 
+
+	
+	
+## To Do
+	
+ * have the `tdm_*` utilities check for root permissions, and auto-elevate itself if necessary
+ * get rid of the "failed in waitforX" message on startup
+ * grub: figure out auto-detection of partition tables, and auto-detect the correct settings for the USB key
