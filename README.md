@@ -252,7 +252,7 @@ Check the cable is properly and firmly inserted.
 ### I see nothing but a blank screen
 
 See previous answer.
-Maybe try turning Target Display Mode off and on again, using either the keyboard shortcuts as described above, or via the various helper scripts `tdm_off`, `tdm_on` or `tdm_toggle`.
+Maybe try turning Target Display Mode off and on again, using either the keyboard shortcuts as described above, or via the various helper scripts `sudo tdm_off`, `sudo tdm_on` or `sudo tdm_toggle`.
 
 ### Does this work on all Macs?
 
@@ -281,11 +281,24 @@ If that doesn't help, check the notes further above about the device IDs, and th
 ### TDM does not automatically turn on on boot
 
 Well, it should, unless cables aren't properly seated anyway.
-However, when you are on the Linux console, run the `/usr/bin/tdm_toggle` toggle command manually and see what happens.
+However, when you are on the Linux console, run the `sudo /usr/bin/tdm_toggle` toggle command manually and see what happens.
 
 If you get an error like "file not found", the packages were not properly installed.
 This is indicative to the partition scheme, wrong or mismatching device identifiers, or the wrong boot option being chosen.
 Please check the previous FAQ question & answer to further details.
+
+
+### Help, I get "Target Display Mode: ioperm failed: Operation not permitted"
+
+This happens if you're logged in on the main console (default on startup, or reachable by ALT-F1 (you may need to use ALT-fn-F1 depending on your Mac keyboard).
+
+The main console is logged in with the tc default account, which can't change the TDM via CLI.
+If you want to do that, run it like this:
+
+`sudo tdm_toggle`
+`sudo tdm_on`
+`sudo tdm_off`
+
 
 
 ## Attributions
