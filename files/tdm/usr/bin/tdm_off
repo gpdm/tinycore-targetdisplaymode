@@ -4,8 +4,8 @@
 trap "" 2
 
 printf "Target Display Mode: " 
-SmcDumpKey MVHR 0
+/usr/bin/sudo /usr/bin/SmcDumpKey MVHR 0
 sleep 1
-SmcDumpKey MVMR 2
+/usr/bin/sudo /usr/bin/SmcDumpKey MVMR 2
 sleep 2
 printf "disabled.\n"

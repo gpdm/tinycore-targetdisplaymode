@@ -4,11 +4,11 @@
 trap "" 2
 
 printf "Target Display Mode: " 
-SmcDumpKey MVHR | grep x00 > /dev/null
+/usr/bin/sudo /usr/bin/SmcDumpKey MVHR | grep x00 > /dev/null
 if [ "$?" = "0" ]; then
 	printf "disabled, toggling ON ...\n"
-	tdm_on
+	/usr/bin/tdm_on
 else
 	printf "enabled, toggling OFF ...\n"
-	tdm_off
+	/usr/bin/tdm_off
 fi
