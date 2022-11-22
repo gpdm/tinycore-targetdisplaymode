@@ -3,7 +3,12 @@
 # disable CTRL-C
 trap "" 2
 
-sed -ibak -e 's|^.*tty2::.*|tty2::askfirst:/usr/bin/tdm_toggle|g;s|^.*tty3::.*|tty3::askfirst:/usr/bin/tdm_on|g;s|^.*tty4::.*|tty4::askfirst:/usr/bin/tdm_off|g' /etc/inittab
+# enable getty "hotkeys"
+# - tty2: toggle TDM
+# - tty3: turn TDM ON
+# - tty4: turn TDM OFF
+# - tty5: power off
+sed -ibak -e 's|^.*tty2::.*|tty2::askfirst:/usr/bin/tdm_toggle|g;s|^.*tty3::.*|tty3::askfirst:/usr/bin/tdm_on|g;s|^.*tty4::.*|tty4::askfirst:/usr/bin/tdm_off|g;s|.*tty5::.*|tty4::askfirst:/sbin/poweroff|g' /etc/inittab
 
 killall -HUP init
 
