@@ -1,0 +1,7 @@
+#!/bin/sh
+
+# disable CTRL-C
+trap "" 2
+
+printf "Shutting down ..." 
+/usr/bin/sudo /sbin/poweroff
