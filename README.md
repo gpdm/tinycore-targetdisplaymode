@@ -38,7 +38,7 @@ The bootable image is extended in the following ways:
    * `/etc/init.d/services/tdm` as an init-style script, which accepts `start|stop|restart` keywords
    * `/usr/bin/tdm_on`, `/usr/bin/tdm_off` and `/usr/bin/tdm_toggle`, which can be used for turning Target Display Mode on/off or toggling it between states.
  * an automated startup trigger is installed at `/usr/local/tce.installed/tdm`, to switch Target Display Mode automatically on
- * `/etc/inittab` is modified to run `tdm_toggle`, `tdm_on` and `tdm_off` scripts via the virtual terminalcs 2-4 (see also hot keys, further below) 
+ * `/etc/inittab` is modified to run `tdm_toggle`, `tdm_on` and `tdm_off` and `tdm_shutdown` scripts via the virtual terminals 2-5 (see also hot keys, further below) 
 
 
 ## Staging a Docker container as a Build Environment
@@ -111,6 +111,7 @@ Now take any USB thumb drive, and proceed as follows:
 
  * Initialize the thumb drive with an *GPT* partition table (don't use MBR style)
  * create a single FAT32 partition
+ * the label of that FAT32 partition *must be* `TINYCORE`
  * Copy all files from the `output` directory directly into the root directory of the USB thumb drive 
 
 (i) The thumb drive should be no less than 64 MiB, but also not bigger. Everything above 64 MiB works of course, but is simply a waste.
@@ -144,7 +145,7 @@ The above would initialize the drive as follows:
  * GPT partition table
  * creates one hidden EFI partition
  * creates one MS-DOS/FAT32 partition
- * sets a label "TINYCORE"
+ * sets a label "TINYCORE" (important: keep this volume label, or auto-detection for system boot WILL FAIL!)
  * and fills all available disk space to the max
 
 Upon reinspection, you will see something like this with the `diskutil list /dev/disk3` command:
@@ -221,7 +222,7 @@ Behold, you can use shortcuts to switch between display modes!
 	
 This section covers potential areas, thay may require modifications in some situations.
 
-### Device Identifiers in grub.cfg
+### Device Auto Detection in grub.cfg
 
 The configuration as seen fits well for my own purpose.
 There might be cases, where it actually has to be adapted to your specific environments.
@@ -229,9 +230,13 @@ There might be cases, where it actually has to be adapted to your specific envir
 One of the more obvious ones is [grub.cfg](files/grub/grub.cfg), which contains the
 boot instructions for Tiny Core Linux.
 
-Please read the extra [instructions](files/grub/README.md) for details concerning
-device identifiers, which may need to be changed depending on your system an in accordance
-to the actual partitioning of your USB key.
+Please read the extra [readme](files/grub/README.md) for details concerning
+the device auto detection.
+
+Nevertheless it shall be mentioned here:
+It's all depending on the USB Key having a volume label called 'TINYCORE'.
+If you call the volume something different, it will not work, and auto-detection and booting WILL FAIL.
+
 
 ### Boot Loader
 
@@ -258,7 +263,10 @@ Maybe try turning Target Display Mode off and on again, using either the keyboar
 ### Does this work on all Macs?
 
 In theory, yes, it should.
-At least on all modell series between ~2009 and ~mid 2014, which supported TDM.
+But I couldn't test it, as I own myself only a 2009 iMac.
+
+At least on all modell series between ~2009 and ~mid 2014, Apple claims
+that Target Display Mode is supported.
 
 Check out the [Apple Knowledge Base](https://support.apple.com/en-us/HT204592) on this topic.
 	
@@ -269,32 +277,28 @@ I just didn't want to install a fullblown OS for getting this rather simple job 
 
 ### I got boot error complaining something about "device / partition not found"
 	
-Yeah, this may be depending on the size of your USB key. Explanations to this are further above and is influenced by the presence
-of the auto-created `EFI` partition on the USB key.
-	
-Please check again the boot procedure, and choose the appropriate *boot options* on the startup menu that matches your USB key size, either
-	
- * Tiny Core Linux (USB <= 2.0 GiB, without EFI partition)
- * Tiny Core Linux (USB > 2.0 GiB, with EFI partition)	
+This could happen given the way how grub.cfg boot entries were managed in the 1.0 release.
+Please see the [old FAQ](https://github.com/gpdm/tinycore-targetdisplaymode/blob/1.0/README.md#i-got-boot-error-complaining-something-about-device--partition-not-found) as a reference.
 
-If that doesn't help, check the notes further above about the device IDs, and their potential need to adaptations in the `grub.cfg` file.
+In the 1.1 release, device auto-detection is performed and you should actually not encounted this issue any longer.
+Beware though that auto-detection only works correctly if the USB volume label is set to `TINYCORE`.
 	
 ### TDM does not automatically turn on on boot
 
 Well, it should, unless cables aren't properly seated anyway.
-However, when you are on the Linux console, run the `sudo /usr/bin/tdm_toggle` toggle command manually and see what happens.
+However, when you are on the Linux console, run the `/usr/bin/tdm_toggle` toggle command manually and see what happens.
 
 If you get an error like "file not found", the packages were not properly installed.
-This is indicative to the partition scheme, wrong or mismatching device identifiers, or the wrong boot option being chosen.
-Please check the previous FAQ question & answer to further details.
+This is indicative to the partition scheme, or, more likely, a wrong volume label (see FAQ item above for more details).
 
 
 ### Help, I get "Target Display Mode: ioperm failed: Operation not permitted"
 
-This happens if you're logged in on the main console (default on startup, or reachable by ALT-F1 (you may need to use ALT-fn-F1 depending on your Mac keyboard).
+This error was seen only in the release 1.0.
+See the [old FAQ](https://github.com/gpdm/tinycore-targetdisplaymode/blob/1.0/README.md#help-i-get-target-display-mode-ioperm-failed-operation-not-permitted) as a reference.
 
-The main console is logged in with the tc default account, which can't change the TDM via CLI.
-If you want to do that, run it like this:
+In release 1.1, this was fixed by having the helper utilities always perform privileges elevation internally. 
+So, in essence, you can call them like this (in release 1.0, this was mandatory):
 
 `sudo tdm_toggle`
 	
@@ -302,16 +306,119 @@ If you want to do that, run it like this:
 	
 `sudo tdm_off`
 
+
+Since release 1.1, it also works without the `sudo`, i.e. like so:
+
+`tdm_toggle`
+	
 	
 ### I get a "failed in waitforX" error!
-	
-This is not actually an error.
-	
-This minimalistic build of TinyCore does not have X installed, and thus will fail to start X11.
-But that's not a problem, as we don't need it at all.
-	
-The message is purely cosmetic and can be safely ignored.
-	
+
+This error was seen only in the release 1.0.
+See the [old FAQ](https://github.com/gpdm/tinycore-targetdisplaymode/blob/1.0/README.md#i-get-a-failed-in-waitforx-error) as a reference.
+As noted there, the issue was because X11 is not enabled, and thus the error is not really an error, but expected behaviour.
+
+In release 1.1, this misleading "error" message was thus removed. 
+
+
+### How to properly shutdown?
+
+Since the operating system loads everything to a RAM disk, you can simply turn the iMac off.
+
+Or, if you want to do it cleanly, either run `poweroff` or `tdm_shutdown` from the system console,
+or use the ALT+(Fn)+F5 + [ENTER] "hotkey" combo, to shutdown and power off.
+
+
+### But it's still an iMac. How much is the power consumption?
+
+Apple has published [power consumption](https://support.apple.com/en-us/HT201918) figures on their website.
+
+As this is a full-blown computer, running in Target Display Mode will still consume a lot more power than
+an ordinary monitor.
+Es an example, the late 2009 iMac I have is reported with 104W Idle consumption.
+I measured this myself and saw the same power consumption.
+
+So, just be aware, it eats a lot of power!
+A monitor is way better at this, especially if you leave it on permanently!
+
+
+### Can I connect a Windows Machine to the iMac in Target Display Mode?
+
+Well, I tested it, but I didn't have the right cables and adapters to verify it.
+I think it heavily depends on the adapters.
+
+Beware that most adapters converting to another display connector standard, are
+intended only to be connected to the "computer-side", and not to the display (or the iMac in this case).
+
+Example 2:
+
+You have a HDMI (male) to Display Port Adapter (female), and a Display Port (male) to Display Port (male) cable.
+
+This might work, if the HDMI to Display Adapter is connected to your computer (and not the iMac).
+
+
+Example 2:
+
+You have a HDMMI (male) to HDMI (male) cable, and a HDMI (female) to Display Port (male) adapter.
+
+This might not work, if the Display Port adapter is connected to the iMac in Target Display Mode instead your computer.
+ 
+
+
+As I said, I couldn't really verify this myself.
+But my assumption given current knowledge is, that it should work with the right adapters.
+
+As a rule of thumb: The adapter goes to the computer (that want's to use the iMac as a display),
+and not to the iMac acting as a display.
+
+I'd be happy to hear about anyone really trying this, to see if the assumption is correct.
+
+
+### Some iMacs report "send_byte(0x52, 0x0300) fail: 0x40" error
+
+On some iMacs, an error like this may be reported, and as a consequence, Target Display Mode will simply not work.
+
+```
+send_byte(0x52, 0x0300) fail: 0x40
+MVHR: read arg fail
+
+read_smc get_key_type error
+```
+
+This was as well reported on the [upstream project](https://github.com/floe/smc_util/issues/2), with no solution currently available.
+
+
+### Can I build this on Windows as well?
+
+I did only test it on Windows 10 with WSL 2 using Ubuntu.
+In short, yes, you can build it.
+
+I didn't test though in WSL 1, or with other Linux distros. Though I don't see any reason, why it shouldn't work from a general point of view.
+
+
+
+### I get a "Kernel too old" message during "docker build"
+
+As the TinyCore ISO is unpacked in Docker for bootstrapping and compiling the tools and the image,
+your host must be able to execute it.
+
+The error simply means, that the TinyCore image expects a newer kernel version,
+and your host system's kernel is in fact too old.
+
+Please update to a newer kernel version on your host machine.
+
+
+### Can I control the brightness of the iMac running in Target Display Mode?
+
+As of today: No.
+The F1/F2 keys for controlling display brightness DO NOT WORK.
+
+And you can't control the display brightness from the connected computer either.
+
+Maybe I can find some time eventually to reverse engineer the SmcDumpKeys command
+to figure out, which setting controls the display brightness.
+
+
 
 ## Attributions
 
