@@ -55,8 +55,18 @@ mksquashfs ${tdm_dir} ${tinycore_dir}/Core-current/cde/optional/tdm.tcz
 echo tdm.tcz >> ${tinycore_dir}/Core-current/cde/onboot.lst
 
 
+# get extra packages
+printf "## STAGE 4: Get extra packages\n"
+sudo -u tc tce-load -w cpupower
+find /tmp/tce/optional -type f -exec cp {} ${tinycore_dir}/Core-current/cde/optional/ \;
+find ${tinycore_dir}/Core-current/cde/optional/ -name cpupower.tcz | grep . || exit 1
+cat >> ${tinycore_dir}/Core-current/cde/onboot.lst <<EOF
+cpupower.tcz
+EOF
+
+
 # assemble the output files
-printf "## STAGE 4: assemble output files\n"
+printf "## STAGE 5: assemble output files\n"
 printf ">> pre cleanup\n"
 rm -rf ${output_dir}/*
 
@@ -78,4 +88,4 @@ xorriso -as mkisofs -l -J -r -V TC-custom -no-emul-boot \
 	-boot-info-table -b boot/isolinux/isolinux.bin \
 	-c boot/isolinux/boot.cat -o ${output_dir}/boot-isos/Core-remastered.iso ${tinycore_dir}/Core-current
 
-printf "## STAGE 5: process completed\n"
+printf "## STAGE 6: process completed\n"
