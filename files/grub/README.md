@@ -1,21 +1,13 @@
 # GRUB config
 
-This config item registers the remastered [TinyCore](http://tinycorelinux.net/) ISO file with a
+The current grub.cfg implements device autodetection,
+which works by searching for a USB key with a 'TINYCORE' volume label.
+
+The boot action then registers the remastered [TinyCore](http://tinycorelinux.net/) ISO file with a
 loopback device, so it can be booted off the USB stick. 
 
-The `iso=sdc*` instructs TinyCore where to look for the ISO files,
-from where extensions are auto-installed during startup.
-The partition number is a given when following the exact [instructions](../../README.md#initalizing-the-usb-drive-in-macos-terminal)
-as outlined. If you use other means of partitioning, then device identifiers might be different,
-and you need to adapt [grub.cfg](grub.cfg) accordingly.
-
- * Please note, for my particular iMac, `sda` was the first harddrive, `sdb` the card reader,
-   and `sdc` would become the USB stick. You may need to adjust the `iso=` device identifier depending on your particular system configuration.
-   See also section below for help on this topic.
-   
- * Be also aware, the two options presented here are to cope with USB keys <= 2.0 GiB,
-   and > 2.0 GiB, for with MacOS' `diskutil` command will always create an EFI partition for anything
-   above 2 GiB in size.
+The `iso=LABEL=TINYCORE` instructs TinyCore where to look for the ISO files,
+again by pointing at a drive with a 'TINYCORE' volume label.
 
 The additional `waitusb=10` is required for the USB thumbdrive to be properly settled,
 otherwise auto-installation of the packages may fail.
@@ -26,38 +18,32 @@ There's no reason for the machine to be connected to the network if it serves as
 See [boot codes](http://www.tinycorelinux.net/faq.html#bootcodes) for additional kernel arguments.
 
 ```
-menuentry "Tiny Core Linux (USB <= 2.0 GiB, without EFI partition)" {
- loopback loop (hd1,gpt1)/boot-isos/Core-remastered.iso
- linux (loop)/boot/vmlinuz waitusb=10 iso=sdc1 nodhcp
+# this is the auto-detecting boot mode
+#
+menuentry "Target Display Mode (TinyCore, Auto-Detect USB Key)" --id tdm_autoboot {
+
+ # try detecting our TDM boot drive, by locating a device
+ # with the TINYCORE label, which will be store into the
+ # ${root} variable
+ search --no-floppy --set=root --label TINYCORE
+
+ echo "'Target Display Mode' boot device found at ${root}"
+ echo -n "Booting in ... "
+ sleep --verbose 3 
+
+ # reflect ${root} variable to mount the ISO file as a loopback device
+ loopback loop (${root})/boot-isos/Core-remastered.iso
+
+ # reflect to iso= kernel argument for locating
+ # the ISO file on this device during boot
+ #
+ # the following alternative syntax should work for UUID and LABEL:
+ # iso=UUID=xxxx-yyyy
+ # iso=LABEL=xyz
+ #
+ # as we don't know the UUID, the label is key for detecting it
+ #
+ linux (loop)/boot/vmlinuz waitusb=10 iso=LABEL=TINYCORE nodhcp
  initrd (loop)/boot/core.gz
 }
-
-menuentry "Tiny Core Linux (USB > 2.0 GiB, with EFI partition)" {
- loopback loop (hd1,gpt2)/boot-isos/Core-remastered.iso
- linux (loop)/boot/vmlinuz waitusb=10 iso=sdc2 nodhcp
- initrd (loop)/boot/core.gz
-}
 ```
-
-### Identifying the USB drive
-
-If you don't know, which Linux device identifier is assigned to your USB thumb drive,
-you may want to boot Tiny Core and run `dmesg | grep removable` from the shell.
-
-Here's an annotated example of what output I get:
-
-```
-sd 6:0:0:0 [sdb] Attached SCSI removable disk                        # built-in card reader
-sd 7:0:0:0 [sdc] Attached SCSI removable disk                        # plugged-in USB thumb drive
-```
-
-Alternatively, do `dmesg | grep Direct-Access`.
-
-```
-scsi 0:0:0:0 Direct-Access     ATA         Hitachi HDS72202 B23N PQ: 0 ANSI: 5
-scsi 6:0:0:0 Direct-Access     APPLE       SD Card Reader   1.0  PQ: 0 ANSI: 0
-scsi 7:0:0:0 Direct-Access     General     USB Flash Disk   1.0  PQ: 0 ANSI: 2
-```
-
-So by matching up device `7:0:0:0` from these examples, I was certain that `sdc` was the correct
-device-ID for my USB thumb drive, hence the `iso=` config statement in `grub.cfg` would read `iso=sdc`.
