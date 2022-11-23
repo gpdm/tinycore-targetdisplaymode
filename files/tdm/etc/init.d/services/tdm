@@ -2,6 +2,13 @@
 
 case "${1}" in
 	start)
+		# enforce minimum frequency and powersave mode for CPU
+	        minfreq=`/usr/local/bin/cpupower frequency-info | /bin/grep limits | /usr/bin/awk '{ print $3 }'`
+		/usr/local/bin/cpupower frequency-set -g powersave -d ${minfreq} -u ${minfreq}
+
+		# put system hard drive into sleep mode
+		hdparm -Y /dev/sda
+
 		/usr/bin/tdm_on
 		;;
 

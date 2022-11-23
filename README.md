@@ -342,6 +342,17 @@ So, just be aware, it eats a lot of power!
 A monitor is way better at this, especially if you leave it on permanently!
 
 
+### Can't power consumption be furtherly reduced?
+
+The iMac is already quiet efficient at conserving power.
+Nevertheless, `cpupower` was incorporate to force the CPU into a low-frequency power conservation mode.
+
+Also, `hdparm` is run to put the system hard drive `/dev/sda` into sleep mode.
+
+According to my measurements on the late-2009 iMac, it doesn't decrease the power conspumption a lot.
+I saw a very minimal reduction of ~8 Watts.
+
+
 ### Can I connect a Windows Machine to the iMac in Target Display Mode?
 
 Well, I tested it, but I didn't have the right cables and adapters to verify it.
