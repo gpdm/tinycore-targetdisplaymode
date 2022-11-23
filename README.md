@@ -441,6 +441,4 @@ to figure out, which setting controls the display brightness.
 	
 ## To Do
 	
- * have the `tdm_*` utilities check for root permissions, and auto-elevate itself if necessary
- * get rid of the "failed in waitforX" message on startup
- * grub: figure out auto-detection of partition tables, and auto-detect the correct settings for the USB key
+ * assert compatibility for other iMacs (see also issue #9)
