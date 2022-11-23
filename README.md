@@ -214,6 +214,7 @@ Behold, you can use shortcuts to switch between display modes!
 | CTRL+ALT+F2, press <ENTER> | Toggle between Target Display Mode and Local Display Mode. This is most similar in behaviour to Apples CMD+F2 key stroke. |
 | CTRL+ALT+F3, press <ENTER> | This will turn on Target Display Mode, and your iMac should now act as a secondary display to your other Mac. |
 | CTRL+ALT+F4, press <ENTER> | This will turn off Target Display Mode, and your iMac should show the local Linux console. |
+| CTRL+ALT+F5, press <ENTER> | Shutdown and power-off the iMac |
 
 
 ## Customizations

@@ -13,6 +13,9 @@ sed -ibak -e 's|^.*tty2::.*|tty2::askfirst:/usr/bin/tdm_toggle|g;s|^.*tty3::.*|t
 # mute the "failed in waitforX" pseudo-error
 sed -ibak -e 's/^waitforX.*/waitforX \|\| exit/g' /home/tc/.xsession
 
+# include tdm_help with .profile file
+echo /usr/bin/tdm_help >> /home/tc/.profile
+
 killall -HUP init
 
 /etc/init.d/services/tdm start

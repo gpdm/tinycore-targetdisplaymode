@@ -1,0 +1,33 @@
+#!/bin/sh
+
+# disable CTRL-C
+trap "" 2
+
+cat<<EOF
+
+WELCOME TO TARGET DISPLAY MODE
+ ______________________________
+
+
+You can use "hotkeys" or CLI commands to control this system.
+
++-----------------------+---------------+--------------------------------------+
+| Hotkey*               | CLI Command   |                                      |
++-----------------------+---------------+--------------------------------------+
+| ALT+F1, press <ENTER> | n/a           | Bring up the system default console) |
++-----------------------+---------------+--------------------------------------+
+| ALT+F2, press <ENTER> | tdm_toggle    | Toggle Target Display Mode ON or OFF |
++-----------------------+---------------+--------------------------------------+
+| ALT+F3, press <ENTER> | tdm_on        | Turn Target Display Mode ON          |
++-----------------------+---------------+--------------------------------------+
+| ALT+F4, press <ENTER> | tdm_off       | Turn Target Display Mode OFF         |
++-----------------------+---------------+--------------------------------------+
+| ALT+F5, press <ENTER> | tdm_shutdown  | Shutdown and power-off the iMac      |
++-----------------------+---------------+--------------------------------------+
+
+
+*) Depending on your Keyboard layout, you must use ALT+(Fn key)+F1, etc.
+
+EOF
+
+
