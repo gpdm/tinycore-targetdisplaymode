@@ -23,7 +23,9 @@ This is where [Tiny Core Linux](http://tinycorelinux.net/) comes into play!
 It's well maintained, and in it's smallest incarnation less than 30 MiB, just about enough to boot up and run a few scripts.
 So the idea was born.
 
-To see an actual walk-through and system demo, checkout my [iMac Target Display Mode using Linux](https://www.youtube.com/watch?v=hnRjJ6PVjic) video on YT.
+To see an actual walk-through and system demo, checkout my videos
+ * [iMac Target Display Mode using Linux](https://www.youtube.com/watch?v=hnRjJ6PVjic)
+ * (only available from Dec/3rd/2022 5:00pm GMT+1) [News on Linux Target Display Mode 1.1 on vintage iMac [... and a hard drive swap fest]](https://www.youtube.com/watch?v=km37qu-NFz0)
 
 # Technical Approach
 
@@ -420,9 +422,9 @@ and your host system's kernel is in fact too old.
 Please update to a newer kernel version on your host machine.
 
 
-### Can I control the brightness of the iMac running in Target Display Mode?
+### How to control the brightness of the iMac running in Target Display Mode
 
-As of today: No.
+As of today: Not possible.
 The F1/F2 keys for controlling display brightness DO NOT WORK.
 
 And you can't control the display brightness from the connected computer either.
