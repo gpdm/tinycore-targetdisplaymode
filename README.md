@@ -168,7 +168,7 @@ For anything less than 2 GiB in size, no EFI partition will be created, hence yo
    1:       Microsoft Basic Data TINYCORE                2.1 GB     disk3s1
 ```
 
-That's totally fine, though it has a to be paid attention to for the boot procedure as outlined later on.
+That's totally fine, the boot loader will take care for these different partition layouts.
 
 
 ### Example of files contained on the USB drive
@@ -192,9 +192,7 @@ Then power your iMac on.
  * Choose "Detect and show boot methods" option and hit ENTER.
 
  * After a few moments, you should get new options on display.
-   * Mind what was mentioned before about sizes of your USB key, and how the `EFI` partition is present for USB keys above 2 GiB in size?
-   * For USB keys <= 2 GiB, choose the `Tiny Core Linux (USB <= 2.0 GiB, without EFI partition)` boot option
-   * For USB keys > 2 GiB, choose the `Tiny Core Linux (USB > 2.0 GiB, with EFI partition)` boot option
+   * select the one reading `Target Display Mode (TinyCore, Auto-Detect USB Key)` and press ENTER
 
  * It should take a few seconds to boot up. Be patient and don't panic when it stalls for 10 seconds.
    That's because the system waits for the USB to settle.
@@ -355,34 +353,37 @@ I saw a very minimal reduction of ~8 Watts.
 
 ### Can I connect a Windows Machine to the iMac in Target Display Mode?
 
-Well, I tested it, but I didn't have the right cables and adapters to verify it.
-I think it heavily depends on the adapters.
+In short: Yes.
+
+But it strongly depends on the adapter and cable.
 
 Beware that most adapters converting to another display connector standard, are
-intended only to be connected to the "computer-side", and not to the display (or the iMac in this case).
+intended only to be connected to the "computer-side", and not to the display-sode (the iMac acting in Target Display Mode in this case).
 
-Example 2:
+#### Example 1
 
 You have a HDMI (male) to Display Port Adapter (female), and a Display Port (male) to Display Port (male) cable.
 
 This might work, if the HDMI to Display Adapter is connected to your computer (and not the iMac).
 
 
-Example 2:
+#### Example 2
+
+You have Display Port (or Mini-DP) male ti Mini-DP male cable.
+This is what I had tested with, and I can confirm this definitely works.
+
+
+#### Example 3
 
 You have a HDMMI (male) to HDMI (male) cable, and a HDMI (female) to Display Port (male) adapter.
 
-This might not work, if the Display Port adapter is connected to the iMac in Target Display Mode instead your computer.
+This will not work, if the Display Port adapter is connected to the iMac in Target Display Mode instead your computer.
  
 
+As a rule of thumb: Straigth cables are propably the most hassle-free.
+Adapters may work, if they're on the computer-side, and not the display-side.
 
-As I said, I couldn't really verify this myself.
-But my assumption given current knowledge is, that it should work with the right adapters.
-
-As a rule of thumb: The adapter goes to the computer (that want's to use the iMac as a display),
-and not to the iMac acting as a display.
-
-I'd be happy to hear about anyone really trying this, to see if the assumption is correct.
+I'd be happy to hear about anyone succeeding with other cable and adapter setups.
 
 
 ### Some iMacs report "send_byte(0x52, 0x0300) fail: 0x40" error
