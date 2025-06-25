@@ -1,3 +1,7 @@
+####################################################################
+# This project is not maintained anymore - left for reference only #
+####################################################################
+
 # Tiny Core Linux Extension for Vintage Mac Target Display Mode
 
 Well, if you ended up here, you're propably running Linux on a Vintage Mac and trying to enable Target Display Mode.
