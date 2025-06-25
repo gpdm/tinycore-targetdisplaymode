@@ -1,6 +1,8 @@
-####################################################################
-# This project is not maintained anymore - left for reference only #
-####################################################################
+################################################################
+
+This project is not maintained anymore - left for reference only
+
+################################################################
 
 # Tiny Core Linux Extension for Vintage Mac Target Display Mode
 
